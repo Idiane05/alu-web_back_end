@@ -1,5 +1,5 @@
-import signUpUser from './4-all-reject';
-import uploadPhoto from './5-all-reject';
+import signUpUser from './4-all-reject.js';
+import uploadPhoto from './5-all-reject.js';
 
 export default async function handleProfileSignup(
   firstName,

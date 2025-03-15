@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
 """python scripts"""
-from pymongo import MongoClient # type: ignore
-
+from pymongo import MongoClient  # type: ignore
 
 METHODS = ["GET", "POST", "PUT", "PATCH", "DELETE"]
 
 
-def log_stats(mongo_collection, option=None):
+def log_stats(mongo_collection):
     """ script that provides some stats about Nginx logs stored in MongoDB
     """
-    if option:
-        value = mongo_collection.count_documents({"method": option})
-        print(f"\tmethod {option}: {value}")
-        return
+    # Total number of logs
+    total_logs = mongo_collection.count_documents({})
+    print(f"{total_logs} logs")
 
-    result = mongo_collection.count_documents({})
-    print(f"{result} logs")
+    # Count for each method
     print("Methods:")
     for method in METHODS:
-        log_stats(mongo_collection, method)
+        count = mongo_collection.count_documents({"method": method})
+        print(f"\tmethod {method}: {count}")
+
+    # Count for status checks
     status_check = mongo_collection.count_documents({"path": "/status"})
     print(f"{status_check} status check")
 
